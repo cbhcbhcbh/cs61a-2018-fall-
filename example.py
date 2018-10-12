@@ -21,3 +21,22 @@ def y(y):
 	y = lambda y: y(h)
 	return lambda h: y(h)
 y = y(y)(y)
+
+
+# example 3
+def the(donald):
+	return donald + 5
+
+def clin(ton):
+	def the(race):
+		return donald + 6
+	def ton(ga):
+		donald = ga-1
+		return the(4)-3
+	return ton
+
+donald, duck = 2, clin(the)
+duck = duck(8)
+"""
+调用clin(the)发展到ton(ga)时，返回一个the(4)，这个the(4)是clin(ton)下的the(race)而不是the(donald)。
+"""
