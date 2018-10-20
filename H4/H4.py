@@ -109,5 +109,12 @@ def count_change(amount):
     >>> check(HW_SOURCE_FILE, 'count_change', ['While', 'For'])
     True
     """
-    def change(n):
-    	
+    def constrained_count(amount, smallest_coin):
+        if amount == 0:
+            return 1
+        if smallest_coin > amount:
+            return 0
+        without_coin = constrained_count(amount, smallest_coin * 2)
+        with_coin = constrained_count(amount - smallest_coin, smallest_coin)
+        return without_coin + with_coin
+    return constrained_count(amount, 1)
