@@ -20,31 +20,12 @@ def Madelung_NaCl(n):
 		for n2 in range(-n, n+1):
 			for n3 in range(-n, n+1):
 				if math.sqrt(n1**2 + n2**2 + n3**2) != 0:
-					result += ((-1)**(n1+n2+n3)) / (math.sqrt(n1**2 + n2**2 + n3**2))
+					result -= ((-1)**(n1+n2+n3)) / (math.sqrt(n1**2 + n2**2 + n3**2))
 	print(result)
 
 
-def Madelung_CsCl(n):
-	"""
-	function CsCl48(N::Int64)
-    N = N + (N & 0x1)
-    negative, positive, N² = 0.0, 0.0, N^2
-    for n₁ ∈ 1:2:N
-        # 体对角线: 1/6 × 1/√3 = √3/18
-        negative -= √3/18 / n₁
-        n₁² = n₁^2
-        for n₂ ∈ n₁+2:2:N
-            n₂² = n₂^2
-            AB = n₁² + n₂²
-            # 在三棱锥面上的原子, 1/2
-            negative -= 1/2 / √(AB + n₁²)  # x = y
-            negative -= 1/2 / √(AB + n₂²)  # y = z
-            # 三棱锥内部的原子
-            for n₃ ∈ n₂+2:2:N
-                negative -= 1 / √(AB + n₃^2)
-            end
-        end
-    end
+"""
+    # 与中心离子相同
     for n₁ ∈ 2:2:N-2
         # 坐标轴上: 1/8
         # 面对角线: 1/4 × 1/√2 = √2/8
@@ -72,5 +53,28 @@ def Madelung_CsCl(n):
     return -48(negative + positive)
 end
 	"""
+
+def Madelung_CsCl(n):
+    negative, positive = 0, 0
+
+    # 与中心离子相同
+    for n1 in range(1, n+1, 2):
+        # 线上的（4种）
+        positive += (1/8) / n1
+        
+        
+    # 与中心离子相反
+    for n1 in range(1, n, 2):
+        # 体对角线
+        negative -= (math.sqrt(3)) / (18 * n1)
+        # 面上离子
+        for n2 in range(n1+2, n, 2):
+            length = n1 ** 2 + n2 ** 2
+            negative -= (1/2) / (math.sqrt(length + n2**2)) + (0.5) / (math.sqrt(length + n1**2))
+            # 内部离子
+            for n3 in range(n2+2, n, 2):
+                negative -= 1 / (math.sqrt(length + n3**2))
+
+
 
 TrueorFalse(name)
